@@ -27,7 +27,18 @@
 						<span>Company: {{ $customer->company->name }}</span>
 					</div>
 			</div>
-			<a href="/customer/{{ $customer->id }}/edit" class="btn btn-primary btn-block" > Edit </a>
+			<div class="row">
+				<div class="col-6">
+					<a href="/customer/{{ $customer->id }}/edit" class="btn btn-primary btn-block" > Edit </a>
+				</div>
+				<div class="col-6">
+					<form action="/customer/{{ $customer->id }}" method="post">
+						@method('DELETE')
+						@csrf
+						<button class="btn btn-danger btn-block">Delete</button>
+					</form>
+				</div>
+			</div>
 
 		</div>
 	</div>

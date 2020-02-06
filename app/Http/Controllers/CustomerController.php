@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use App\Company;
-
+use App\Mail\WelcomeMail;
+use Illuminate\support\Facades\Mail;
 class CustomerController extends Controller
 {
     function index() {
-    	$customers = Customer::all();
+    	$customers = Customer::where('status', request()->query('active', 1))->get();
     	return view('customer.index', ['customers'=> $customers, 'title' => 'home']);
     }
     function create() {
         $companies = Company::all();
-    	return view('customer.create', compact('companies'));
+        $customer = new Customer();
+    	return view('customer.create', compact('companies', 'customer'));
     }
 
     function show($customerId) {
@@ -28,25 +30,29 @@ class CustomerController extends Controller
     	return view('customer.edit', compact('customer', 'companies'));    }
 
     function store() {
-    	$data = request()->validate([
-    		'name'        => 'required',
-    		'email'       => 'required|email',
-    		'status'      => 'required',
-            'company_id'  => 'required',
-    	]);
-    	Customer::create($data);
+    	$customer = Customer::create($this->requestData());
+        Mail::to($customer->email)->send(new WelcomeMail($customer));
     	return redirect('/customer/create')->with('status','success');
     }
 
     function update(Customer $customer) {
-    	$data = request()->validate([
-    		'name'        => 'required',
-    		'email'       => 'required|email',
-    		'status'      => 'required',
-            'company_id'  =>  'required'     
-    	]);
-
-    	$customer->update($data);
+    	
+    	$customer->update($this->requestData());
     	return redirect('/customer');
+    }
+
+    function destroy(Customer $customer) {
+        $customer->delete();
+        return redirect('/customer');
+    }
+
+    private function requestData() {
+        return $data = request()->validate([
+            'name'        => 'required',
+            'email'       => 'required|email',
+            'status'      => 'required',
+            'company_id'  =>  'required'     
+        ]);
+
     }
 }
