@@ -1,12 +1,14 @@
 @extends('customer.form.layout')
 @section('content')
-<a href="/customer/create" class="alert alert-link">Create a new customer</a>
+<div class="justify-content-center row">
+	<div class="col-6">
+		<a href="/customer/create" class="alert alert-link">Create a new customer</a>
 	<div class="text-primary py-3">
 		All customer:
 		<a href="customer?active=1" class="href">Active</a>
 		<a href="customer?active=0" class="href">Inactive</a>
 	</div>
-	<div class="row">
+	<div class="row justify-content-center">
 		
 		@foreach($customers as $customer)
 			<div class="col-12">
@@ -25,4 +27,6 @@
 			</div>
 		@endforeach
 	</div>
+	</div>
+</div>
 @endsection

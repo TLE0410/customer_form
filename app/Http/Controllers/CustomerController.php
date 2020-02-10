@@ -9,6 +9,10 @@ use App\Mail\WelcomeMail;
 use Illuminate\support\Facades\Mail;
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     function index() {
     	$customers = Customer::where('status', request()->query('active', 1))->get();
     	return view('customer.index', ['customers'=> $customers, 'title' => 'home']);
