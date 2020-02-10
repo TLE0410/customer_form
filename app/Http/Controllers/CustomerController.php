@@ -12,9 +12,10 @@ class CustomerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('remind');
     }
     function index() {
-    	$customers = Customer::where('status', request()->query('active', 1))->get();
+    	$customers = Customer::all();
     	return view('customer.index', ['customers'=> $customers, 'title' => 'home']);
     }
     function create() {

@@ -10,7 +10,7 @@
 <body>
 	<div class="row py-3">
 		<div class="col-1 pt-3">
-			<a href="/customer" class="alert-link"> &#60back</a>
+			<a href="{{ route('/customer') }}" class="alert-link"> &#60back</a>
 		</div>
 		<div class="col-3 container w-50 border">
 			<div class="container">
@@ -29,10 +29,10 @@
 			</div>
 			<div class="row">
 				<div class="col-6">
-					<a href="/customer/{{ $customer->id }}/edit" class="btn btn-primary btn-block" > Edit </a>
+					<a href="{{ route('/customer/edit', ['customerId' => $customer]) }}" class="btn btn-primary btn-block" > Edit </a>
 				</div>
 				<div class="col-6">
-					<form action="/customer/{{ $customer->id }}" method="post">
+					<form action="{{ route('/customer/delete', ['customer' => $customer]) }}" method="post">
 						@method('DELETE')
 						@csrf
 						<button class="btn btn-danger btn-block">Delete</button>
