@@ -8,6 +8,7 @@ use App\Events\NewCustomerHasRegisteredEvent;
 use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Mail;
+use \Carbon\Carbon;
 class CustomerController extends Controller
 {
     public function __construct()
@@ -16,6 +17,7 @@ class CustomerController extends Controller
         $this->middleware('remind');
     }
     function index() {
+        
     	$customers = Customer::all();
     	return view('customer.index', ['customers'=> $customers, 'title' => 'home']);
     }

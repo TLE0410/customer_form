@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,23 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    function authenticated(Request $request, $user)
+    {
+        if($user->lastTimeLogin()->where('user_id',$user->id)->get()->isEmpty()) {
+
+            $user->lastTimeLogin()->create([
+                'user_id' => $user->id,
+                'last_time' => Carbon::now()->toDateTimeString(),
+                'ip' => $request->getClientIp(),
+            ]);
+        } else {
+            $user->lastTimeLogin()->update([
+                'last_time' => Carbon::now()->toDateTimeString(),
+                'ip' => $request->getClientIp(),
+            ]);
+        }
+        
+
     }
 }

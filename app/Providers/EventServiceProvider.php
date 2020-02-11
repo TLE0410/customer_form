@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\LoginEvent;
 use App\Events\NewCustomerHasRegisteredEvent;
 use App\Listeners\IntroduceListener;
+use App\Listeners\LoginListener;
 use App\Listeners\WelcomeCustomerListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         NewCustomerHasRegisteredEvent::class => [
             WelcomeCustomerListener::class,
             IntroduceListener::class,
+        ],
+        LoginEvent::class => [
+            LoginListener::class,
         ],
     ];
 
