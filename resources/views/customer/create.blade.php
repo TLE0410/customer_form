@@ -6,7 +6,7 @@
 
 <div class="row justify-content-center">
 	<div class="col-8">
-		<form action="{{ route('customer/store') }}" method="post" class="py-3">
+		<form action="{{ route('/customer/store') }}" method="post" class="py-3">
 			@include('customer.form.formInput')
 			@csrf
 			<div class="py-3 px-3">

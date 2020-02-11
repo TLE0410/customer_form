@@ -17,7 +17,7 @@ class remind
      */
     public function handle($request, Closure $next)
     {
-        if(now()->format('H') > 17){
+        if(now()->format('H') > 22){
             return response('it time to sleep');     
         }
         return $next($request);

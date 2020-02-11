@@ -1,5 +1,6 @@
 <?php
 
+use App\Company;
 use Illuminate\Foundation\Inspiring;
 
 /*
@@ -16,3 +17,13 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('contact:company-clean', function() {
+	Company::whereDoesntHave('customers')
+				->get()
+				->each(function ($company) {
+					$this->warn('Deleted :' .$company->name);
+					$company->delete();
+				});
+	$this->info("all cleaned!");
+})->describe('Clean all unuse company which has no customer');

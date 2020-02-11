@@ -11,9 +11,11 @@ class Company extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Customer()
+
+    protected $guarded = [];
+    public function customers()
     {
     	// hasMany(RelatedModel, foreignKeyOnRelatedModel = company_id, localKey = id)
-    	return $this->hasMany(Customer::class, 'id', 'company_id');
+    	return $this->hasMany(Customer::class, 'company_id', 'id');
     }
 }
