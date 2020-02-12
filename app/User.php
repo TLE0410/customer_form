@@ -38,6 +38,6 @@ class User extends Authenticatable
     ];
 
     public function lastTimeLogin() {
-        return $this->hasOne(lastTimeLogin::class);
+        return $this->hasOne(lastTimeLogin::class, 'user_id', 'id');
     }
 }
