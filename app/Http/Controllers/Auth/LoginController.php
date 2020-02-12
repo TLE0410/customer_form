@@ -42,7 +42,7 @@ class LoginController extends Controller
     function authenticated(Request $request, $user)
     {
         if($user->lastTimeLogin()->where('user_id',$user->id)->get()->isEmpty()) {
-
+            return response('doesnt has');
             $user->lastTimeLogin()->create([
                 'user_id' => $user->id,
                 'last_time' => Carbon::now()->toDateTimeString(),

@@ -28,9 +28,15 @@ class LoginListener
      */
     public function handle($event)
     {
-        $time = new Carbon(auth()->user()->lastTimeLogin->last_time);
-        if ($time->diffInMinutes(now()) > 10) {
-            Mail::to(auth()->user()->email)->send(new RemindMail());
+        if (auth()->user()) {
+            $time = new Carbon(auth()->user()->lastTimeLogin->last_time->get());
+            if ($time->diffInHours(now()) > 24) {
+                Mail::to(auth()->user()->email)->send(new RemindMail());
+                auth()->user()->lastTimeLogin()->update([
+                    'last_time' => Carbon::now()->toDateTimeString(),
+                    
+                ]);
+            }
         }
     }
 }

@@ -24,15 +24,7 @@ class remind
     public function handle($request, Closure $next)
     {
         
-        $time = new Carbon(auth()->user()->lastTimeLogin->last_time);
-        if ($time->diffInMinutes(now()) > 1) {
-            Mail::to(auth()->user()->email)->send(new RemindMail());
-            auth()->user()->lastTimeLogin()->update([
-                'last_time' => Carbon::now()->toDateTimeString(),
-                
-            ]);
-        }
-        if(now()->format('H') > 22){
+        if(now()->format('H') > 17){
             return response('it time to sleep');     
         }
         return $next($request);
