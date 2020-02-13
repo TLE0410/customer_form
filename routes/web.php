@@ -13,12 +13,12 @@
 use App\Mail\WelcomeMail;
 
 Route::get('/customer', 'CustomerController@index')->name('/customer');
-Route::get('/customer/create', 'CustomerController@create')->name('/customer/create');
-Route::get('/customer/{customerId}', 'CustomerController@show')->name('/customer/show');
-Route::get('/customer/{customerId}/edit', 'CustomerController@edit')->name('/customer/edit');
-Route::patch('/customer/{customer}', 'CustomerController@update')->name('/customer/update');
-Route::post('/store', 'CustomerController@store')->name('/customer/store');
-Route::delete('/customer/{customer}', 'CustomerController@destroy')->name('/customer/delete');
+Route::get('/customer/create', 'CustomerController@create')->name('/customer/create')->middleware('can:create,App\Customer');
+Route::get('/customer/{customer}', 'CustomerController@show')->name('/customer/show');
+Route::get('/customer/{customer}/edit', 'CustomerController@edit')->name('/customer/edit')->middleware('can:restore,App\Customer');
+Route::patch('/customer/{customer}', 'CustomerController@update')->name('/customer/update')->middleware('can:update,App\Customer');
+Route::post('/store', 'CustomerController@store')->name('/customer/store')->middleware('can:create,App\Customer');
+Route::delete('/customer/{customer}', 'CustomerController@destroy')->name('/customer/delete')->middleware('can:delete,App\Customer');
 
 Route::get('/mail', function() {
     return new WelcomeMail();

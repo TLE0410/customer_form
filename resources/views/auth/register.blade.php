@@ -61,6 +61,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="position-code" class="col-md-4 col-form-label text-md-right">{{ __('Position code') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="position" type="password" class="form-control" name="position">
+                                <small class="font-italic">
+                                    * It can bee blank(default user)
+                                </small>
+                            </div>
+                            
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

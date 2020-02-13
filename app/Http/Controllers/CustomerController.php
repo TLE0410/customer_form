@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use \Carbon\Carbon;
+
 class CustomerController extends Controller
 {
     public function __construct()
@@ -19,7 +20,7 @@ class CustomerController extends Controller
     }
     function index() {
         
-    	$customers = Customer::all();
+    	$customers = Customer::with('company')->paginate(15);
     	return view('customer.index', ['customers'=> $customers, 'title' => 'home']);
     }
     function create() {
@@ -28,14 +29,13 @@ class CustomerController extends Controller
     	return view('customer.create', compact('companies', 'customer'));
     }
 
-    function show($customerId) {
-    	$customer = Customer::findOrFail($customerId);
+    function show(Customer $customer) {
+    	
     	return view('customer.show', compact('customer'));
     }
 
-    function edit($customerId) {
+    function edit(Customer $customer) {
         $companies = Company::all();
-    	$customer = Customer::findOrFail($customerId);
     	return view('customer.edit', compact('customer', 'companies'));    }
 
     function store() {
