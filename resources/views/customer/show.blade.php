@@ -8,11 +8,16 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	</head>
 <body>
-	<div class="row py-3">
-		<div class="col-1 pt-3">
-			<a href="{{ route('/customer') }}" class="alert-link"> &#60back</a>
+	<a href="{{ route('/customer') }}" class="alert-link"> &#60back</a>
+	<div class="row py-5 mt-5 d-flex justify-content-center " >
+	
+		<div class="col-3">
+			@if($customer->image) 
+				<img src="{{ asset('storage/'.$customer->image) }}" alt="avatar" class="img-thumbnail">
+			@endif
 		</div>
-		<div class="col-3 container w-50 border">
+	
+		<div class="col-3 w-50 border d-flex flex-column h-50">
 			<div class="container">
 					<div class="form-group">
 						<span>Name: {{ $customer->name }}</span>
@@ -27,7 +32,7 @@
 						<span>Company: {{ $customer->company->name }}</span>
 					</div>
 			</div>
-			<div class="row">
+			<div class="row card-footer  ">
 				<div class="col-6">
 					<a href="{{ route('/customer/edit', ['customerId' => $customer]) }}" class="btn btn-primary btn-block" > Edit </a>
 				</div>
@@ -43,6 +48,7 @@
 		</div>
 	</div>
 	
+
 	
 </body>
 </html>

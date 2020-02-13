@@ -13,7 +13,7 @@
 			<a href="{{ route('/customer/show', ['customerId' => $customer]) }} " class="alert-link "> &#60 back</a>
 		</div>
 		<div class="col-8">
-			<form action="{{ route('/customer/update', compact('customer')) }}" method="post" class="border rounded container w-50 ">
+			<form action="{{ route('/customer/update', compact('customer')) }}" method="post" class="border rounded container w-50 " enctype="multipart/form-data">
 				@method('PATCH')
 				@include('customer.form.formInput')
 				@csrf

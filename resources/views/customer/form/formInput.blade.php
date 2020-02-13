@@ -42,4 +42,11 @@
 		<span class="text-danger">{{ $message }}</span>
 		@enderror
 	</div>
+	<div class="form-group d-flex flex-column">
+		<label for="image">Profile image: </label>
+		<input type="file" name="image">
+		@error('image')
+		<span class="text-danger">{{ $message }}</span>
+		@enderror
+	</div>
 </div>

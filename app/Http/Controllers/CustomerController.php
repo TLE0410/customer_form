@@ -8,6 +8,7 @@ use App\Events\NewCustomerHasRegisteredEvent;
 use App\Mail\WelcomeMail;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Mail;
+use Intervention\Image\Facades\Image;
 use \Carbon\Carbon;
 class CustomerController extends Controller
 {
@@ -40,6 +41,7 @@ class CustomerController extends Controller
     function store() {
     	$customer = Customer::create($this->requestData());
         //Mail::to($customer->email)->send(new WelcomeMail($customer));
+        $this->storeImage($customer);
         event(new NewCustomerHasRegisteredEvent($customer));
     	return redirect('/customer/create')->with('status','success');
     }
@@ -47,7 +49,8 @@ class CustomerController extends Controller
     function update(Customer $customer) {
     	
     	$customer->update($this->requestData());
-    	return redirect('/customer');
+        $this->storeImage($customer);
+    	return redirect('/customer/'.$customer->id);
     }
 
     function destroy(Customer $customer) {
@@ -56,12 +59,26 @@ class CustomerController extends Controller
     }
 
     private function requestData() {
+
         return $data = request()->validate([
             'name'        => 'required',
             'email'       => 'required|email',
             'status'      => 'required',
-            'company_id'  =>  'required'     
+            'company_id'  => 'required',
+            'image'       =>  'sometimes|file|image|max:5000',     
         ]);
 
+    }
+
+    function storeImage($customer) {
+        if (request()->has('image')) {
+            $customer->update([
+                'image' => request()->image->store('uploads', 'public')
+            ]);
+
+            $image = Image::make(public_path('storage/'.$customer->image))->fit(300, 300);
+            $image->save();
+
+        }
     }
 }
