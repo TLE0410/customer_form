@@ -43,9 +43,15 @@ class CustomerPolicy
     public function create(User $user)
     {
         //
-        return in_array($user->position, [
-            'admin',
-        ]);
+        foreach ($user->roles()->get() as $role) {
+            if(in_array($role->name, [
+                'admin',
+                'create_customer',
+            ])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -58,9 +64,15 @@ class CustomerPolicy
     public function update(User $user, Customer $customer)
     {
         //
-        return in_array($user->position, [
-            'admin',
-        ]);
+        foreach ($user->roles()->get() as $role) {
+            if(in_array($role->name, [
+                'admin',
+                'update_customer',
+            ])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -73,9 +85,15 @@ class CustomerPolicy
     public function delete(User $user, Customer $customer)
     {
         //
-        return in_array($user->position, [
-            'admin',
-        ]);
+        foreach ($user->roles()->get() as $role) {
+            if(in_array($role->name, [
+                'admin',
+                'delete_customer',
+            ])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -88,9 +106,15 @@ class CustomerPolicy
     public function restore(User $user, Customer $customer)
     {
         //
-        return in_array($user->position, [
-            'admin',
-        ]);
+        foreach ($user->roles()->get() as $role) {
+            if(in_array($role->name, [
+                'admin',
+                'restore_customer',
+            ])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

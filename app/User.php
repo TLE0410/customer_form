@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Role;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','last_login','position'
+        'name', 'email', 'password','last_login',
     ];
 
     /**
@@ -39,5 +40,8 @@ class User extends Authenticatable
 
     public function lastTimeLogin() {
         return $this->hasOne(lastTimeLogin::class, 'user_id', 'id');
+    }
+    public function roles() {
+        return $this->belongsToMany(Role::class)->withTimeStamps();
     }
 }

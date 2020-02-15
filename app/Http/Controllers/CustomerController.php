@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use \Carbon\Carbon;
+use App\User;
 
 class CustomerController extends Controller
 {
@@ -18,7 +19,7 @@ class CustomerController extends Controller
         $this->middleware('auth');
         $this->middleware('remind');
     }
-    function index() {
+    function index() {       
         
     	$customers = Customer::with('company')->paginate(15);
     	return view('customer.index', ['customers'=> $customers, 'title' => 'home']);
@@ -35,6 +36,7 @@ class CustomerController extends Controller
     }
 
     function edit(Customer $customer) {
+        
         $companies = Company::all();
     	return view('customer.edit', compact('customer', 'companies'));    }
 

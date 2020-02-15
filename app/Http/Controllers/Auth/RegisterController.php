@@ -65,16 +65,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $position = 'user';
-        if($data['position'] == '1234') {
-            $position = 'admin'; 
-        }
+        
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'position' => $position,
         ]);
+        
         $user->lastTimeLogin()->create([
             'user_id' => $user->id,
             'last_time' => Carbon::now()->toDateTimeString(),

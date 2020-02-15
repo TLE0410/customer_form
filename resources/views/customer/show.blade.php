@@ -33,7 +33,7 @@
 					</div>
 				</div>
 				<div class="row mt-5">
-					@can('restore', $customer)
+					@can('update', $customer)
 					<div class="col-6">
 						<a href="{{ route('/customer/edit', ['customer' => $customer]) }}" class="btn btn-primary btn-block" > Edit </a>
 					</div>

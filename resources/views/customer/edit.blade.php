@@ -10,7 +10,7 @@
 <body>
 	<div class="row py-3">
 		<div class="col-2 ">
-			<a href="{{ route('/customer/show', ['customerId' => $customer]) }} " class="alert-link "> &#60 back</a>
+			<a href="{{ route('/customer/show', ['customer' => $customer]) }} " class="alert-link "> &#60 back</a>
 		</div>
 		<div class="col-8">
 			<form action="{{ route('/customer/update', compact('customer')) }}" method="post" class="border rounded container w-50 " enctype="multipart/form-data">
